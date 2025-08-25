@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import AddModuleModal from "@/components/AddModuleModal";
+import { Plus, Users } from "lucide-react";
 
 const modules = [
   {
@@ -11,98 +13,104 @@ const modules = [
     name: "Home",
     description: "Puerta de entrada con accesos a campañas, noticias y llamadas a la acción clave",
     icon: "🏠",
-    pages: 8
+    pages: 8,
+    isCustom: false
   },
   {
     id: 2,
     name: "Quiénes somos",
     description: "Identidad institucional: movimiento internacional, historia, misión/visión/principios",
     icon: "👥",
-    pages: 12
+    pages: 12,
+    isCustom: false
   },
   {
     id: 3,
     name: "Participa",
     description: "Convoca a sumarse: voluntariado, campañas, apoyo administrativo, cultura humanitaria",
     icon: "🤝",
-    pages: 6
+    pages: 6,
+    isCustom: false
   },
   {
     id: 4,
     name: "Donar",
     description: "Canaliza donaciones: Colecta Nacional, Fondo desastres, tramitar deducible",
     icon: "💝",
-    pages: 8
+    pages: 8,
+    isCustom: false
   },
   {
     id: 5,
     name: "Programas",
     description: "Líneas de acción: Socorros, Resiliencia, Atención migrantes, Salud comunitaria",
     icon: "📋",
-    pages: 15
+    pages: 15,
+    isCustom: false
   },
   {
     id: 6,
     name: "Formación y capacitación",
     description: "Oferta académica: CENCAD, escuelas, cursos, certificaciones, educación en línea",
     icon: "🎓",
-    pages: 10
+    pages: 10,
+    isCustom: false
   },
   {
     id: 7,
     name: "Servicios",
     description: "Cartera de servicios: hospitales, servicios médicos, banco de sangre",
     icon: "🏥",
-    pages: 7
+    pages: 7,
+    isCustom: false
   },
   {
     id: 8,
     name: "Cómo prepararse en emergencias",
     description: "Información práctica: recomendaciones y aplicaciones móviles",
     icon: "🚨",
-    pages: 4
+    pages: 4,
+    isCustom: false
   },
   {
     id: 9,
     name: "Transparencia",
     description: "Rendición de cuentas: estados financieros, reportes, proyectos financiados",
     icon: "📊",
-    pages: 8
+    pages: 8,
+    isCustom: false
   },
   {
     id: 10,
     name: "Prensa y noticias",
     description: "Comunicados, galería multimedia, entrevistas, boletín institucional",
     icon: "📰",
-    pages: 12
-  },
-  {
-    id: 11,
-    name: "Usuarios",
-    description: "Portales de autenticación: Donador, Empleado, Voluntario",
-    icon: "👤",
-    pages: 6
+    pages: 12,
+    isCustom: false
   },
   {
     id: 12,
     name: "Tienda",
     description: "Canal de comercio para productos institucionales",
     icon: "🛒",
-    pages: 5
+    pages: 5,
+    isCustom: false
   },
   {
     id: 13,
     name: "Contacto",
     description: "Vías de comunicación con la institución",
     icon: "📞",
-    pages: 3
+    pages: 3,
+    isCustom: false
   },
   {
     id: 14,
     name: "Legales",
     description: "Aviso de privacidad, políticas, términos y condiciones",
     icon: "⚖️",
-    pages: 4
+    pages: 4,
+    isCustom: false
   }
 ];
 
@@ -117,6 +125,8 @@ const states = [
 const Dashboard = () => {
   const [level, setLevel] = useState<string>("nacional");
   const [selectedState, setSelectedState] = useState<string>("");
+  const [allModules, setAllModules] = useState(modules);
+  const [isAddModuleOpen, setIsAddModuleOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleEditModule = (moduleId: number) => {
@@ -125,6 +135,14 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     navigate("/");
+  };
+
+  const handleAddModule = (newModule: any) => {
+    setAllModules([...allModules, newModule]);
+  };
+
+  const handleUserManagement = () => {
+    navigate("/users");
   };
 
   return (
@@ -142,9 +160,19 @@ const Dashboard = () => {
                 <p className="text-xs text-muted-foreground">Gestor de Contenido</p>
               </div>
             </div>
-            <Button onClick={handleLogout} variant="outline">
-              Cerrar Sesión
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button 
+                onClick={handleUserManagement}
+                variant="outline"
+                className="flex items-center space-x-2"
+              >
+                <Users className="w-4 h-4" />
+                <span>Gestión de Usuarios</span>
+              </Button>
+              <Button onClick={handleLogout} variant="outline">
+                Cerrar Sesión
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -199,29 +227,45 @@ const Dashboard = () => {
         </Card>
 
         {/* Modules Grid */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Módulos de Contenido</h2>
-          <p className="text-muted-foreground mb-6">
-            Administra el contenido de cada módulo de la landing page ({level === "nacional" ? "Nacional" : `${selectedState || "Estatal"}`})
-          </p>
+        <div className="mb-6 flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground mb-2">Módulos de Contenido</h2>
+            <p className="text-muted-foreground">
+              Administra el contenido de cada módulo de la landing page ({level === "nacional" ? "Nacional" : `${selectedState || "Estatal"}`})
+            </p>
+          </div>
+          <Button 
+            onClick={() => setIsAddModuleOpen(true)}
+            className="bg-primary hover:bg-primary-hover flex items-center space-x-2"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Agregar Módulo</span>
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((module) => (
+          {allModules.map((module) => (
             <Card key={module.id} className="hover:shadow-lg transition-shadow cursor-pointer group">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl">{module.icon}</div>
-                    <div>
-                      <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                        {module.name}
-                      </CardTitle>
-                      <Badge variant="secondary" className="mt-1">
-                        {module.pages} páginas
-                      </Badge>
+                    <div className="flex items-center space-x-3">
+                      <div className="text-2xl">{module.icon}</div>
+                      <div>
+                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                          {module.name}
+                        </CardTitle>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <Badge variant="secondary">
+                            {module.pages} páginas
+                          </Badge>
+                          {module.isCustom && (
+                            <Badge variant="outline" className="text-xs">
+                              Personalizado
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
@@ -248,6 +292,13 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Add Module Modal */}
+      <AddModuleModal
+        isOpen={isAddModuleOpen}
+        onClose={() => setIsAddModuleOpen(false)}
+        onAddModule={handleAddModule}
+      />
     </div>
   );
 };
