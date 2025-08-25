@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Save, Eye, Edit, Image, Type } from "lucide-react";
 
-// Enhanced content for ALL modules
+// Mock content for different modules
 const moduleContent = {
   1: { // Home
     title: "Bienvenidos a Cruz Roja Mexicana",
@@ -17,10 +17,9 @@ const moduleContent = {
     heroText: "Somos una institución de asistencia privada, auxiliar de los poderes públicos en el ámbito humanitario.",
     ctaText: "Únete a nosotros",
     sections: [
-      { type: "hero", title: "Sección Principal", content: "Mensaje principal de bienvenida" },
-      { type: "campaigns", title: "Campañas Activas", content: "Colecta Nacional 2024, Donativos de Sangre" },
-      { type: "news", title: "Noticias Recientes", content: "Últimas noticias institucionales" },
-      { type: "cta", title: "Llamadas a la Acción", content: "Hazte voluntario, Dona ahora" }
+      { type: "hero", title: "Sección Principal", content: "Contenido del hero" },
+      { type: "campaigns", title: "Campañas Activas", content: "Campañas destacadas" },
+      { type: "news", title: "Noticias Recientes", content: "Últimas noticias" }
     ]
   },
   2: { // Quiénes somos
@@ -28,142 +27,13 @@ const moduleContent = {
     subtitle: "Conoce nuestra historia y misión",
     heroText: "Cruz Roja Mexicana es parte del Movimiento Internacional de la Cruz Roja y de la Media Luna Roja.",
     sections: [
-      { type: "identity", title: "Identidad Institucional", content: "Movimiento internacional humanitario" },
-      { type: "history", title: "Historia", content: "Fundada en 1910 por iniciativa de ciudadanos mexicanos" },
-      { type: "mission", title: "Misión", content: "Prevenir y aliviar el sufrimiento humano" },
-      { type: "vision", title: "Visión", content: "Ser la organización humanitaria líder" },
-      { type: "principles", title: "Principios Fundamentales", content: "Humanidad, Imparcialidad, Neutralidad, Independencia" },
-      { type: "structure", title: "Estructura Organizacional", content: "Consejo Nacional, Delegaciones" }
-    ]
-  },
-  3: { // Participa
-    title: "Participa con Nosotros",
-    subtitle: "Tu ayuda hace la diferencia",
-    heroText: "Únete como voluntario y forma parte del movimiento humanitario más grande del mundo.",
-    sections: [
-      { type: "volunteer", title: "Hazte Voluntario", content: "Programas de voluntariado disponibles" },
-      { type: "campaigns", title: "Campañas Puntuales", content: "Participa en campañas específicas" },
-      { type: "administrative", title: "Apoyo Administrativo", content: "Colabora desde oficina" },
-      { type: "culture", title: "Cultura Humanitaria", content: "Promueve valores humanitarios" },
-      { type: "youth", title: "Programa Juvenil", content: "Actividades para niñas, niños y jóvenes" }
-    ]
-  },
-  4: { // Donar
-    title: "Donar Salva Vidas",
-    subtitle: "Ayudar siempre es salvar vidas",
-    heroText: "Tu donativo nos permite seguir atendiendo emergencias y desastres en todo México.",
-    sections: [
-      { type: "general", title: "Donación General", content: "Apoya todas nuestras actividades" },
-      { type: "colecta", title: "Colecta Nacional", content: "Campaña anual de recaudación" },
-      { type: "disasters", title: "Fondo para Desastres", content: "Respuesta inmediata ante emergencias" },
-      { type: "deducible", title: "Tramitar Deducible", content: "Proceso para deducir donaciones" },
-      { type: "corporate", title: "Donación Empresarial", content: "Programas para empresas" }
-    ]
-  },
-  5: { // Programas
-    title: "Nuestros Programas",
-    subtitle: "Líneas de acción humanitaria",
-    heroText: "Desarrollamos programas integrales para atender las necesidades más urgentes de la población.",
-    sections: [
-      { type: "rescue", title: "Socorros y USAR", content: "Búsqueda y rescate urbano" },
-      { type: "resilience", title: "Resiliencia y Reducción de Riesgos", content: "Preparación ante desastres" },
-      { type: "migrants", title: "Atención a Personas Migrantes", content: "Asistencia humanitaria a migrantes" },
-      { type: "health", title: "Promoción de Salud Comunitaria", content: "Programas de salud preventiva" },
-      { type: "blood", title: "Donación Voluntaria de Sangre", content: "Bancos de sangre y componentes" },
-      { type: "inclusion", title: "Inclusión Social", content: "Programas de integración social" }
-    ]
-  },
-  6: { // Formación y capacitación
-    title: "Formación y Capacitación",
-    subtitle: "Educación para salvar vidas",
-    heroText: "Ofrecemos la mejor formación humanitaria y técnica especializada.",
-    sections: [
-      { type: "cencad", title: "CENCAD", content: "Centro Nacional de Capacitación y Desarrollo" },
-      { type: "schools", title: "Escuelas Especializadas", content: "Técnicos en Urgencias Médicas, Enfermería" },
-      { type: "courses", title: "Cursos y Talleres", content: "Primeros auxilios, brigadas de emergencia" },
-      { type: "certifications", title: "Certificaciones", content: "Programas certificados oficialmente" },
-      { type: "online", title: "Educación en Línea", content: "Plataforma de aprendizaje virtual" }
-    ]
-  },
-  7: { // Servicios
-    title: "Servicios a la Población",
-    subtitle: "Atención médica de calidad",
-    heroText: "Brindamos servicios médicos especializados y de calidad para toda la población.",
-    sections: [
-      { type: "hospitals", title: "Hospitales Cruz Roja", content: "Red hospitalaria nacional" },
-      { type: "medical", title: "Servicios Médicos", content: "Consulta externa, urgencias" },
-      { type: "blood_bank", title: "Banco de Sangre", content: "Colecta y distribución de sangre" },
-      { type: "ambulances", title: "Servicios de Ambulancia", content: "Traslados médicos especializados" }
-    ]
-  },
-  8: { // Cómo prepararse en emergencias
-    title: "Preparación en Emergencias",
-    subtitle: "Información que salva vidas",
-    heroText: "Aprende cómo prepararte y actuar antes, durante y después de una emergencia.",
-    sections: [
-      { type: "preparation", title: "Cómo Prepararse", content: "Guías de preparación familiar" },
-      { type: "recommendations", title: "Recomendaciones", content: "Consejos por tipo de emergencia" },
-      { type: "apps", title: "Apps Móviles", content: "Aplicaciones de alerta temprana" },
-      { type: "kits", title: "Kit de Emergencia", content: "Qué incluir en tu kit familiar" }
-    ]
-  },
-  9: { // Transparencia
-    title: "Transparencia Institucional",
-    subtitle: "Rendición de cuentas",
-    heroText: "Conoce cómo utilizamos los recursos y nuestro compromiso con la transparencia.",
-    sections: [
-      { type: "financial", title: "Estados Financieros", content: "Informes anuales auditados" },
-      { type: "reports", title: "Reportes Anuales", content: "Informe de actividades institucionales" },
-      { type: "projects", title: "Proyectos Financiados", content: "Detalle de programas y proyectos" },
-      { type: "donations", title: "Donativos Recibidos", content: "Transparencia en donaciones" },
-      { type: "legal", title: "Cumplimiento Legal", content: "Obligaciones normativas" }
-    ]
-  },
-  10: { // Prensa y noticias
-    title: "Prensa y Noticias",
-    subtitle: "Mantente informado",
-    heroText: "Las últimas noticias y comunicados oficiales de Cruz Roja Mexicana.",
-    sections: [
-      { type: "news", title: "Últimas Noticias", content: "Noticias institucionales recientes" },
-      { type: "press", title: "Comunicados de Prensa", content: "Comunicados oficiales" },
-      { type: "gallery", title: "Galería Multimedia", content: "Fotos y videos institucionales" },
-      { type: "interviews", title: "Entrevistas", content: "Entrevistas con directivos" },
-      { type: "blog", title: "Blog Humanitario", content: "Artículos de interés humanitario" },
-      { type: "alerts", title: "Alertas de Emergencia", content: "Información de emergencias activas" }
-    ]
-  },
-  12: { // Tienda
-    title: "Tienda Cruz Roja",
-    subtitle: "Productos institucionales",
-    heroText: "Adquiere productos oficiales y apoya nuestra labor humanitaria.",
-    sections: [
-      { type: "clothing", title: "Ropa y Accesorios", content: "Playeras, gorras, accesorios oficiales" },
-      { type: "equipment", title: "Equipo de Primeros Auxilios", content: "Botiquines y equipo médico" },
-      { type: "educational", title: "Material Educativo", content: "Libros, manuales, material didáctico" },
-      { type: "promotional", title: "Artículos Promocionales", content: "Productos con logo institucional" }
-    ]
-  },
-  13: { // Contacto
-    title: "Contacta con Nosotros",
-    subtitle: "Estamos aquí para ayudarte",
-    heroText: "Ponte en contacto con Cruz Roja Mexicana a través de nuestros diferentes canales.",
-    sections: [
-      { type: "general", title: "Información General", content: "Teléfonos y direcciones principales" },
-      { type: "emergency", title: "Emergencias", content: "Números de emergencia 24/7" },
-      { type: "volunteers", title: "Voluntarios", content: "Información para voluntarios" }
-    ]
-  },
-  14: { // Legales
-    title: "Información Legal",
-    subtitle: "Políticas y términos",
-    heroText: "Consulta nuestras políticas de privacidad y términos de uso.",
-    sections: [
-      { type: "privacy", title: "Aviso de Privacidad", content: "Políticas de manejo de datos" },
-      { type: "cookies", title: "Políticas de Cookies", content: "Uso de cookies en sitio web" },
-      { type: "terms", title: "Términos y Condiciones", content: "Términos de uso del sitio" },
-      { type: "copyright", title: "Derechos de Autor", content: "Información de copyright" }
+      { type: "identity", title: "Identidad Institucional", content: "Nuestra identidad" },
+      { type: "history", title: "Historia", content: "Fundada en 1910..." },
+      { type: "mission", title: "Misión", content: "Nuestra misión humanitaria" },
+      { type: "vision", title: "Visión", content: "Nuestra visión al futuro" }
     ]
   }
+  // Add more modules as needed
 };
 
 const ModuleEditor = () => {
@@ -182,7 +52,8 @@ const ModuleEditor = () => {
   const moduleNames = {
     1: "Home", 2: "Quiénes somos", 3: "Participa", 4: "Donar", 5: "Programas",
     6: "Formación y capacitación", 7: "Servicios", 8: "Cómo prepararse en emergencias",
-    9: "Transparencia", 10: "Prensa y noticias", 12: "Tienda", 13: "Contacto", 14: "Legales"
+    9: "Transparencia", 10: "Prensa y noticias", 11: "Usuarios", 12: "Tienda",
+    13: "Contacto", 14: "Legales"
   };
 
   useEffect(() => {
