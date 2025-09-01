@@ -12,14 +12,52 @@ import { ArrowLeft, Save, Eye, Edit, Image, Type } from "lucide-react";
 // Mock content for different modules
 const moduleContent = {
   1: { // Home
-    title: "Bienvenidos a Cruz Roja Mexicana",
-    subtitle: "Ayudar siempre es salvar vidas",
-    heroText: "Somos una institución de asistencia privada, auxiliar de los poderes públicos en el ámbito humanitario.",
-    ctaText: "Únete a nosotros",
+    title: "FONDO PARA LA ATENCIÓN DE DESASTRES NATURALES",
+    subtitle: "Ayuda a las comunidades afectadas por desastres naturales",
+    heroText: "En Cruz Roja Mexicana trabajamos para brindar atención inmediata y apoyo a las comunidades que enfrentan desastres naturales. Tu donación salva vidas.",
+    ctaText: "Dona ahora",
     sections: [
-      { type: "hero", title: "Sección Principal", content: "Contenido del hero" },
-      { type: "campaigns", title: "Campañas Activas", content: "Campañas destacadas" },
-      { type: "news", title: "Noticias Recientes", content: "Últimas noticias" }
+      { 
+        type: "hero", 
+        title: "Sección Principal - Fondo de Desastres", 
+        content: "Imagen principal con equipo de respuesta y vehículo de emergencia",
+        image: "Hero con personal de Cruz Roja y unidad móvil"
+      },
+      { 
+        type: "services", 
+        title: "Servicios de Emergencia", 
+        content: "Grid de servicios: Ambulancias, Rescate, Primeros auxilios, Donación de sangre, Capacitación, Apoyo psicológico",
+        icons: ["🚑", "🛟", "🩹", "🩸", "📚", "💭"]
+      },
+      { 
+        type: "delegation", 
+        title: "Ubica tu Delegación", 
+        content: "Mapa interactivo de México con ubicaciones de delegaciones",
+        image: "Mapa de México con marcadores rojos"
+      },
+      { 
+        type: "emergency", 
+        title: "Servicios de Emergencia", 
+        content: "Ambulancias y personal especializado listo para actuar las 24 horas",
+        image: "Ambulancias y paramédicos en acción"
+      },
+      { 
+        type: "programs", 
+        title: "Nuestros Programas", 
+        content: "Programas destacados: Atención en desastres, Búsqueda y rescate canino, Colecta nacional",
+        cards: [
+          { title: "Atención en Desastres", desc: "Respuesta inmediata ante emergencias", color: "bg-primary" },
+          { title: "Búsqueda y Rescate", desc: "Equipos especializados y caninos", color: "bg-secondary" },
+          { title: "Colecta Nacional", desc: "Apoyo continuo a programas", color: "bg-accent" }
+        ]
+      },
+      { 
+        type: "volunteer", 
+        title: "Hazte Voluntario", 
+        content: "Únete a nuestro equipo de voluntarios y ayuda a salvar vidas en tu comunidad",
+        image: "Personal médico sonriendo",
+        form: true
+      }
     ]
   },
   2: { // Quiénes somos
@@ -165,31 +203,152 @@ const ModuleEditor = () => {
                   </div>
 
                   {/* Content Sections */}
-                  {currentContent.sections?.map((section, index) => (
-                    <div 
-                      key={index}
-                      className={`bg-white p-6 border rounded-lg ${isEditing ? 'cursor-pointer hover:ring-2 hover:ring-primary' : ''}`}
-                      onClick={() => isEditing && handleEditSection(section.type)}
-                    >
-                      {isEditing && (
-                        <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium">
-                          Editar
+                  {currentContent.sections?.map((section, index) => {
+                    // Services Section
+                    if (section.type === 'services') {
+                      return (
+                        <div 
+                          key={index}
+                          className={`bg-gradient-to-r from-primary/90 to-primary p-6 rounded-lg text-white relative ${isEditing ? 'cursor-pointer hover:ring-2 hover:ring-white' : ''}`}
+                          onClick={() => isEditing && handleEditSection(section.type)}
+                        >
+                          {isEditing && (
+                            <div className="absolute top-2 right-2 bg-white text-primary px-2 py-1 rounded text-xs font-medium">
+                              Editar
+                            </div>
+                          )}
+                          <h2 className="text-xl font-semibold mb-6">{section.title}</h2>
+                          <div className="grid grid-cols-3 gap-4">
+                            {section.icons?.map((icon, idx) => (
+                              <div key={idx} className="text-center p-3 bg-white/20 rounded-lg">
+                                <div className="text-2xl mb-2">{icon}</div>
+                                <p className="text-sm">Servicio {idx + 1}</p>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      )}
-                      <h2 className="text-xl font-semibold text-primary mb-3">{section.title}</h2>
-                      <p className="text-muted-foreground">{section.content}</p>
-                      <div className="mt-4 flex space-x-2">
-                        <Badge variant="outline">
-                          <Image className="w-3 h-3 mr-1" />
-                          Imagen
-                        </Badge>
-                        <Badge variant="outline">
-                          <Type className="w-3 h-3 mr-1" />
-                          Texto
-                        </Badge>
+                      );
+                    }
+                    
+                    // Delegation Map Section
+                    if (section.type === 'delegation') {
+                      return (
+                        <div 
+                          key={index}
+                          className={`bg-gray-50 p-6 rounded-lg relative ${isEditing ? 'cursor-pointer hover:ring-2 hover:ring-primary' : ''}`}
+                          onClick={() => isEditing && handleEditSection(section.type)}
+                        >
+                          {isEditing && (
+                            <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium">
+                              Editar
+                            </div>
+                          )}
+                          <h2 className="text-xl font-semibold text-primary mb-4">{section.title}</h2>
+                          <div className="flex items-center gap-6">
+                            <div className="flex-1">
+                              <p className="text-muted-foreground mb-4">{section.content}</p>
+                              <Button variant="default" className="bg-primary">
+                                Buscar delegación
+                              </Button>
+                            </div>
+                            <div className="w-64 h-48 bg-gray-200 rounded-lg flex items-center justify-center">
+                              <span className="text-gray-500">🗺️ Mapa de México</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    
+                    // Programs Cards Section
+                    if (section.type === 'programs') {
+                      return (
+                        <div 
+                          key={index}
+                          className={`bg-white p-6 rounded-lg border relative ${isEditing ? 'cursor-pointer hover:ring-2 hover:ring-primary' : ''}`}
+                          onClick={() => isEditing && handleEditSection(section.type)}
+                        >
+                          {isEditing && (
+                            <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium">
+                              Editar
+                            </div>
+                          )}
+                          <h2 className="text-xl font-semibold text-primary mb-4">{section.title}</h2>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {section.cards?.map((card, idx) => (
+                              <div key={idx} className={`${card.color} text-white p-4 rounded-lg`}>
+                                <h3 className="font-semibold mb-2">{card.title}</h3>
+                                <p className="text-sm opacity-90">{card.desc}</p>
+                                <Button variant="secondary" size="sm" className="mt-3 bg-white/20 hover:bg-white/30">
+                                  Más info
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
+                    
+                    // Volunteer Section
+                    if (section.type === 'volunteer') {
+                      return (
+                        <div 
+                          key={index}
+                          className={`bg-secondary/30 p-6 rounded-lg relative ${isEditing ? 'cursor-pointer hover:ring-2 hover:ring-primary' : ''}`}
+                          onClick={() => isEditing && handleEditSection(section.type)}
+                        >
+                          {isEditing && (
+                            <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium">
+                              Editar
+                            </div>
+                          )}
+                          <div className="flex items-center gap-6">
+                            <div className="w-32 h-32 bg-primary/20 rounded-full flex items-center justify-center">
+                              <span className="text-4xl">👩‍⚕️</span>
+                            </div>
+                            <div className="flex-1">
+                              <h2 className="text-xl font-semibold text-primary mb-2">{section.title}</h2>
+                              <p className="text-muted-foreground mb-4">{section.content}</p>
+                              <Button className="bg-primary hover:bg-primary-hover">
+                                Registrarse como voluntario
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    
+                    // Default Section Layout
+                    return (
+                      <div 
+                        key={index}
+                        className={`bg-white p-6 border rounded-lg relative ${isEditing ? 'cursor-pointer hover:ring-2 hover:ring-primary' : ''}`}
+                        onClick={() => isEditing && handleEditSection(section.type)}
+                      >
+                        {isEditing && (
+                          <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium">
+                            Editar
+                          </div>
+                        )}
+                        <h2 className="text-xl font-semibold text-primary mb-3">{section.title}</h2>
+                        <p className="text-muted-foreground mb-4">{section.content}</p>
+                        <div className="flex items-center gap-4">
+                          <div className="w-24 h-16 bg-gray-200 rounded flex items-center justify-center">
+                            <Image className="w-6 h-6 text-gray-400" />
+                          </div>
+                          <div className="flex space-x-2">
+                            <Badge variant="outline">
+                              <Image className="w-3 h-3 mr-1" />
+                              Imagen
+                            </Badge>
+                            <Badge variant="outline">
+                              <Type className="w-3 h-3 mr-1" />
+                              Texto
+                            </Badge>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
